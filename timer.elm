@@ -55,7 +55,7 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div [ centeredLayout ] 
-    [ text (toString (Time.inSeconds model.time)) 
+    [ text (formatTime (Time.inSeconds model.time)) 
     ,  div [] 
       [ button [ onClick Start ] [ text "Start" ]
       , button [ onClick Stop ] [ text "Stop" ]
@@ -63,7 +63,14 @@ view model =
       ]
 
     ]
-  
+
+
+formatTime : Time -> String
+formatTime secs =
+  toString (floor (secs/60)) ++ 
+  ":" ++ 
+  String.padLeft 2 '0' ( toString ((Result.withDefault 0 (String.toInt(toString(secs)))) % 60) ) 
+
 
 -- Styles
 
